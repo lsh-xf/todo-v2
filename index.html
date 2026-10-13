@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>刘仕豪 · 个人简历</title>
+<link rel="stylesheet" href="final.css">
+</head>
+<body>
+<div class="page">
+
+  <header class="header">
+    <nav class="topnav">
+      <span class="nav-title">个人简历</span>
+      <span class="navlinks">
+        <a href="#skills">技能</a>
+        <a href="#projects">项目</a>
+        <a href="#todo">待办</a>
+        <a href="#edu">教育</a>
+      </span>
+    </nav>
+    <h1>刘仕豪</h1>
+    <div class="header-meta">
+      <p class="meta">
+        <span class="meta-item">深圳大学 · 计算机科学与技术</span>
+        <span class="meta-item">求职方向：后端开发实习</span>
+        <span class="meta-item">138-0000-0000</span>
+        <a class="meta-item mail" href="mailto:liushihao@szu.edu.cn">liushihao@szu.edu.cn</a>
+      </p>
+    </div>
+  </header>
+
+  <section class="section" id="skills">
+    <h2>技能</h2>
+    <div class="skills-grid" id="skills-grid">
+      <article class="card">
+        <div class="card-head"><h3>Java</h3></div>
+        <div class="card-body"><p>面向对象与集合框架，能独立完成控制台与 Web 小项目</p></div>
+      </article>
+      <article class="card">
+        <div class="card-head"><h3>Python</h3></div>
+        <div class="card-body"><p>数据处理与脚本自动化，熟悉 requests 与 pandas 基础用法</p></div>
+      </article>
+      <article class="card">
+        <div class="card-head"><h3>C / C++</h3></div>
+        <div class="card-body"><p>指针、内存管理与数据结构，实现过链表与哈希表</p></div>
+      </article>
+      <article class="card">
+        <div class="card-head"><h3>HTML / CSS</h3></div>
+        <div class="card-body"><p>语义化标签、Flex 与 Grid 布局，能写响应式单页</p></div>
+      </article>
+      <article class="card">
+        <div class="card-head"><h3>MySQL</h3></div>
+        <div class="card-body"><p>建表、索引与多表关联查询，理解事务与范式基础</p></div>
+      </article>
+      <article class="card">
+        <div class="card-head"><h3>Git / Linux</h3></div>
+        <div class="card-body"><p>分支协作与常用命令，能在 Linux 下编译调试程序</p></div>
+      </article>
+    </div>
+  </section>
+
+  <section class="section" id="projects">
+    <h2>项目经历</h2>
+    <article class="project">
+      <h3>校园二手交易平台</h3>
+      <p>课程小组项目，负责用户模块与商品列表接口。</p>
+    </article>
+    <article class="project">
+      <h3>基于大模型的学习助手</h3>
+      <p>个人项目，接入大模型 API 做笔记摘要与问答。</p>
+    </article>
+  </section>
+
+  <section class="section" id="todo">
+    <h2>待办事项</h2>
+    <p class="todo-hint">V2.0：用 JavaScript 完成「添加」与「显示」两项功能。</p>
+    <form class="todo-form" id="todo-form">
+      <input type="text" id="todo-input" placeholder="输入待办事项">
+      <button type="button" id="add-btn">添加</button>
+    </form>
+    <ul id="todo-list" class="todo-list"></ul>
+  </section>
+
+  <section class="section" id="edu">
+    <h2>教育经历</h2>
+    <article class="project">
+      <h3>深圳大学 · 计算机科学与技术</h3>
+      <p>2024.09 – 2028.06 ｜ GPA 3.7 / 4.0</p>
+    </article>
+  </section>
+
+</div>
+<script src="ai_todo.js"></script>
+</body>
+</html>

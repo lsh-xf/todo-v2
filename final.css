@@ -1,0 +1,243 @@
+/* ============================================================
+   个人简历页面 · 修正版（按审查结论手动修改）
+   final.css
+   ============================================================ */
+
+/* ------ 基础重置：盒模型统一为 border-box ------ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
+  font-size: 18px;
+  line-height: 1.7;
+  color: #1f2937;
+  background: #f5f7fb;
+}
+
+.page {
+  background: #ffffff;
+  max-width: 1024px;
+  margin: 0 auto;
+}
+
+a {
+  color: #2b5ce6;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+a:focus-visible {
+  outline: 2px solid #2b5ce6;
+  outline-offset: 2px;
+}
+
+.topnav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 0 0 16px;
+}
+
+.navlinks {
+  display: flex;
+  gap: 24px;
+}
+
+/* ------ 顶部信息 ------ */
+.header {
+  padding: 24px;
+  border-bottom: 1px solid #e3e8ef;
+}
+
+.header h1 {
+  font-size: 34px;
+  letter-spacing: 0.5px;
+  color: #111827;
+}
+
+.header .meta {
+  color: #5a6672;
+  font-size: 16px;
+}
+
+/* ------ 通用区块 ------ */
+.section {
+  padding: 20px 24px;
+}
+
+.section h2 {
+  font-size: 22px;
+  color: #111827;
+  margin: 0 0 12px;
+}
+
+/* ------ 技能卡片网格：移动优先 ------ */
+.skills-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  padding: 20px 0;
+}
+
+.skills-grid .card {
+  padding: 20px;
+  border: 1px solid #e3e8ef;
+  border-radius: 10px;
+  background: #ffffff;
+}
+
+@media (min-width: 640px) {
+  .header {
+    padding: 36px 48px 28px;
+  }
+  .section {
+    padding: 28px 48px;
+  }
+  .skills-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .skills-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
+  }
+}
+
+.card h3 {
+  font-size: 18px;
+  color: #111827;
+}
+
+.card p {
+  font-size: 16px;
+  color: #4b5563;
+}
+
+/* ------ 项目与教育 ------ */
+.project {
+  padding: 14px 0;
+  border-bottom: 1px dashed #e3e8ef;
+}
+
+.project h3 {
+  font-size: 18px;
+  color: #111827;
+}
+
+.project p {
+  font-size: 16px;
+  color: #4b5563;
+}
+
+/* ------ 顶部简介区：分组、换行与间距 ------ */
+.header h1 {
+  margin: 0 0 10px;
+}
+
+/* 四条信息改成 flex 容器：间距由 gap 统一给，窄屏整条换行 */
+.header .meta {
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 20px;
+}
+
+/* 每条信息整体换行，不允许在词中间断开（"后端" / "开发实习"） */
+.meta-item {
+  white-space: nowrap;
+}
+
+/* ------ 卡片与项目条目：默认段距归零，改由 margin 精确控制 ------ */
+.card h3,
+.project h3 {
+  margin: 0 0 6px;
+}
+
+.card p,
+.project p {
+  margin: 0;
+}
+
+/* ------ V2.0 待办事项：表单一行排列，窄屏自动换行 ------ */
+.todo-hint {
+  margin: 0 0 14px;
+  font-size: 16px;
+  color: #5a6672;
+}
+
+.todo-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+#todo-input {
+  flex: 1 1 220px;
+  min-width: 0;
+  padding: 10px 14px;
+  font-size: 16px;
+  font-family: inherit;
+  color: #1f2937;
+  border: 1px solid #e3e8ef;
+  border-radius: 10px;
+}
+
+#todo-input:focus-visible {
+  outline: 2px solid #2b5ce6;
+  outline-offset: 2px;
+  border-color: #2b5ce6;
+}
+
+#add-btn {
+  flex: 0 0 auto;
+  padding: 10px 24px;
+  font-size: 16px;
+  font-family: inherit;
+  color: #ffffff;
+  background: #2b5ce6;
+  border: 0;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+#add-btn:hover {
+  background: #1e4ac4;
+}
+
+#add-btn:focus-visible {
+  outline: 2px solid #111827;
+  outline-offset: 2px;
+}
+
+.todo-list {
+  margin: 18px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.todo-list li {
+  padding: 12px 16px;
+  margin-bottom: 8px;
+  font-size: 16px;
+  color: #1f2937;
+  background: #f5f7fb;
+  border: 1px solid #e3e8ef;
+  border-radius: 10px;
+  word-break: break-word;
+}
+
+.todo-list li:last-child {
+  margin-bottom: 0;
+}
