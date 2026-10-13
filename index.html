@@ -74,11 +74,17 @@
 
   <section class="section" id="todo">
     <h2>待办事项</h2>
-    <p class="todo-hint">V2.0：用 JavaScript 完成「添加」与「显示」两项功能。</p>
+    <p class="todo-hint">V2.0 数据驱动重构：状态集中在 todos 数组，遵循「改数据 → 保存 → 重渲染」；删除用 filter、切换用 map + 展开、localStorage 保存与恢复。</p>
     <form class="todo-form" id="todo-form">
       <input type="text" id="todo-input" placeholder="输入待办事项">
-      <button type="button" id="add-btn">添加</button>
+      <button type="submit" id="add-btn">添加</button>
     </form>
+    <div class="todo-filters" id="todo-filters">
+      <button type="button" class="filter-btn" data-filter="all">全部</button>
+      <button type="button" class="filter-btn" data-filter="active">进行中</button>
+      <button type="button" class="filter-btn" data-filter="completed">已完成</button>
+      <button type="button" id="clear-completed-btn">清除已完成</button>
+    </div>
     <ul id="todo-list" class="todo-list"></ul>
   </section>
 
@@ -91,6 +97,6 @@
   </section>
 
 </div>
-<script src="ai_todo.js"></script>
+<script src="app.js"></script>
 </body>
 </html>
