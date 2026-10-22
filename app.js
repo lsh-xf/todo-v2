@@ -42,6 +42,7 @@ if (!form || !input || !list || !filters) {
     visible.forEach(t => {
       const li = document.createElement('li');
       li.className = 'todo-item' + (t.completed ? ' done' : '');
+      li.dataset.id = String(t.id);            // W8 步骤①：让 li 记住它是哪条数据（替代闭包捕获 t.id）
 
       const cb = document.createElement('input');
       cb.type = 'checkbox';
@@ -55,6 +56,7 @@ if (!form || !input || !list || !filters) {
       const del = document.createElement('button');
       del.type = 'button';
       del.className = 'todo-del';
+      del.dataset.action = 'delete';           // W8 步骤①：删除按钮打上操作标记，供委托分流识别
       del.textContent = '删除';
       del.addEventListener('click', () => removeTodo(t.id));
 
