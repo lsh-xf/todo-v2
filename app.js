@@ -43,10 +43,11 @@ if (!form || !input || !list || !filters) {
       const li = document.createElement('li');
       li.className = 'todo-item' + (t.completed ? ' done' : '');
 
+      li.dataset.id = String(t.id);            // W8：让 li 记住它是哪条数据（替代闭包捕获 t.id）
+
       const cb = document.createElement('input');
       cb.type = 'checkbox';
       cb.checked = t.completed;
-      cb.addEventListener('change', () => toggleTodo(t.id));
 
       const span = document.createElement('span');
       span.className = 'todo-text';
@@ -55,10 +56,16 @@ if (!form || !input || !list || !filters) {
       const del = document.createElement('button');
       del.type = 'button';
       del.className = 'todo-del';
+      del.dataset.action = 'delete';           // W8：删除按钮打上操作标记，供委托分流识别
       del.textContent = '删除';
-      del.addEventListener('click', () => removeTodo(t.id));
 
-      li.append(cb, span, del);
+      const edit = document.createElement('button');
+      edit.type = 'button';
+      edit.className = 'todo-edit';
+      edit.dataset.action = 'edit';            // W8 任务3：编辑按钮打上操作标记（脱离 AI 独立迁移）
+      edit.textContent = '编辑';
+
+      li.append(cb, span, del, edit);
       list.appendChild(li);
     });
   };
@@ -83,6 +90,13 @@ if (!form || !input || !list || !filters) {
     todos = todos.map(t =>
       t.id === id ? { ...t, completed: !t.completed } : t
     );
+    save();
+    render();
+  };
+
+  // 编辑（W8 任务3：脱离 AI 独立手写，沿用不可变更新）
+  const editTodo = (id, text) => {
+    todos = todos.map(t => (String(t.id) === String(id) ? { ...t, text } : t));
     save();
     render();
   };
@@ -119,6 +133,33 @@ if (!form || !input || !list || !filters) {
     } else if (btn.dataset.filter) {
       setFilter(btn.dataset.filter);
     }
+  });
+
+  // W8 事件委托：列表项的删除/切换/编辑统一交给父容器 ul#list（替代原逐项绑定）
+  // 新增节点无需单独绑监听器；closest 逐层空值防御；操作分流用 return 而非 stopPropagation
+  list.addEventListener('click', (e) => {
+    if (!(e.target instanceof Element)) return;          // ① 防：target 不是元素
+    const item = e.target.closest('li');                 // 从点击处向上找任务行
+    if (!item || !list.contains(item)) return;           // ②③ 防：点空白 closest 返回 null / 越界
+    const id = item.dataset.id;
+    if (!id) return;                                     // ④ 防：li 上没有 data-id
+    const delBtn = e.target.closest('[data-action="delete"]');
+    if (delBtn && item.contains(delBtn)) {
+      removeTodo(id);
+      return;                                            // ⑤ 分流后返回，防止 toggleTodo 多余执行
+    }
+    const editBtn = e.target.closest('[data-action="edit"]');
+    if (editBtn && item.contains(editBtn)) {
+      const old = todos.find(t => String(t.id) === String(id));
+      if (!old) return;
+      const next = prompt('编辑任务', old.text);
+      if (next === null) return;                         // 取消编辑
+      const text = next.trim();
+      if (text === '') return;                           // 空输入边界
+      editTodo(id, text);
+      return;
+    }
+    toggleTodo(id);
   });
 
   // 启动：先恢复数据，再渲染
