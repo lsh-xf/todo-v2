@@ -47,7 +47,6 @@ if (!form || !input || !list || !filters) {
       const cb = document.createElement('input');
       cb.type = 'checkbox';
       cb.checked = t.completed;
-      cb.addEventListener('change', () => toggleTodo(t.id));
 
       const span = document.createElement('span');
       span.className = 'todo-text';
@@ -58,7 +57,6 @@ if (!form || !input || !list || !filters) {
       del.className = 'todo-del';
       del.dataset.action = 'delete';           // W8 步骤①：删除按钮打上操作标记，供委托分流识别
       del.textContent = '删除';
-      del.addEventListener('click', () => removeTodo(t.id));
 
       li.append(cb, span, del);
       list.appendChild(li);
@@ -120,6 +118,22 @@ if (!form || !input || !list || !filters) {
       clearCompleted();
     } else if (btn.dataset.filter) {
       setFilter(btn.dataset.filter);
+    }
+  });
+
+  // W8 步骤②：事件委托——删除/切换统一交给父容器 ul#list（替代逐项绑定）
+  // 三道防御：① target 非元素 ② closest 返回 null/越界 ③ id 缺失；操作分流用 else 而非 stopPropagation
+  list.addEventListener('click', (e) => {
+    if (!(e.target instanceof Element)) return;            // ① 防：target 不是元素
+    const item = e.target.closest('li');                   // 从点击处向上找任务行
+    if (!item || !list.contains(item)) return;             // ②③ 防：点空白 closest 返回 null / 越界
+    const id = item.dataset.id;
+    if (!id) return;                                       // ④ 防：li 上没有 data-id
+    const delBtn = e.target.closest('[data-action="delete"]');
+    if (delBtn && item.contains(delBtn)) {
+      removeTodo(id);                                      // 命中删除：只删除
+    } else {
+      toggleTodo(id);                                      // 其余情况：切换
     }
   });
 
