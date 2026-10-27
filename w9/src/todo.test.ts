@@ -3,7 +3,7 @@
 // 每个 test 内部新建 todos，数据相互隔离；断言到具体业务值，不只用长度。
 
 import { test, expect } from 'vitest';
-import { addTodo, toggleTodo, type Todo } from './todo';
+import { addTodo, toggleTodo, removeTodo, type Todo } from './todo';
 
 // ① 正常添加：不仅看长度，还要验证文本内容真的写进去了（防「拦住了却存成空串」）
 test('正常添加：文本内容正确', () => {
@@ -55,4 +55,24 @@ test('维度9 安全：<script> 应被拦截', () => {
   addTodo(todos, '<script>alert(1)</script>'); // 模拟 XSS 注入
   expect(todos.length).toBe(0);
   expect(todos[0]?.text ?? '').not.toContain('<script>');
+});
+
+// 维度5 状态前置：一条任务被删除之后，再对它做切换操作 —— 不能复活、也不能报错。
+// AI 的用例只覆盖了「存在的 id」和「从头就不存在的 id」，漏掉了「曾经存在、但已被删除」这种状态。
+test('维度5 状态前置：已删除的任务再操作不应复活', () => {
+  const todos: Todo[] = [{ id: 1, text: '学习TS', completed: false }];
+  removeTodo(todos, 1);
+  expect(todos.length).toBe(0);
+  toggleTodo(todos, 1);        // 对已删除的 id 再次操作
+  expect(todos.length).toBe(0); // 既不复活，也不抛错
+});
+
+// 维度6 重复/幂等：同一个 id 连续切换两次，应当回到初始状态。
+// 幂等性靠断言「第二次之后的值」来验证，只断言第一次翻转是抓不到这类 bug 的。
+test('维度6 重复/幂等：同一 id 切换两次回到原状态', () => {
+  const todos: Todo[] = [{ id: 1, text: '学习TS', completed: false }];
+  toggleTodo(todos, 1);
+  expect(todos[0].completed).toBe(true);
+  toggleTodo(todos, 1);
+  expect(todos[0].completed).toBe(false); // 第二次应翻转回初始状态
 });
