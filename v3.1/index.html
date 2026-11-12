@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="data:," />
+    <title>Todo V3.1 · 搜索与拖拽排序</title>
+  </head>
+  <body>
+    <main class="app">
+      <header class="head">
+        <h1>Todo V3.1</h1>
+        <p class="hint">数据驱动 · 事件委托 · 不可变排序</p>
+      </header>
+
+      <section class="searchbar">
+        <input id="search-input" class="input" placeholder="搜索任务关键字（纯空格视为未搜索）" />
+        <span id="stats" class="stats">当前视图 0 条 / 总计 0 条</span>
+      </section>
+
+      <form id="todo-form" class="form">
+        <input id="todo-input" class="input" placeholder="要做什么？" />
+        <button class="btn primary" type="submit">添加</button>
+      </form>
+
+      <ul id="todo-list" class="list"></ul>
+
+      <footer class="bar">
+        <span class="tip">拖动条目可调整顺序，顺序会保存到本地</span>
+        <button id="clear-btn" class="btn" type="button">清除已完成</button>
+      </footer>
+    </main>
+    <script type="module" src="/src/app.ts"></script>
+  </body>
+</html>
