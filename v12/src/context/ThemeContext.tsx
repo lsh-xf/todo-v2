@@ -4,6 +4,7 @@ import type { Theme } from '../types';
 
 interface ThemeContextValue {
   theme: Theme;
+  setTheme: (theme: Theme) => void;
   toggleTheme: () => void;
 }
 
@@ -25,7 +26,7 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
   }, []);
 
   const value = useMemo<ThemeContextValue>(
-    () => ({ theme, toggleTheme }),
+    () => ({ theme, setTheme, toggleTheme }),
     [theme, toggleTheme],
   );
 
